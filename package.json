@@ -64,6 +64,56 @@
           "type": "bitmap",
           "name": "SPRITE_SHEET_EGG_ALT",
           "file": "images/sprite_sheet-egg-alt.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_SHEET_BABY",
+          "file": "images/sprite_sheet-baby.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_SHEET_BABY_ALT",
+          "file": "images/sprite_sheet-baby-alt.png"
+        },
+        {
+          "type": "raw",
+          "name": "TOOL_ICON_EAT",
+          "file": "images/tool-eat.pdc"
+        },
+        {
+          "type": "raw",
+          "name": "TOOL_ICON_PLAY",
+          "file": "images/tool-play.pdc"
+        },
+        {
+          "type": "raw",
+          "name": "TOOL_ICON_SLEEP",
+          "file": "images/tool-sleep.pdc"
+        },
+        {
+          "type": "raw",
+          "name": "TOOL_ICON_HEAL",
+          "file": "images/tool-heal.pdc"
+        },
+        {
+          "type": "raw",
+          "name": "TOOL_ICON_ALERT",
+          "file": "images/tool-alert.pdc"
+        },
+        {
+          "type": "raw",
+          "name": "TOOL_ICON_CHECK_HEALTH",
+          "file": "images/tool-check_health.pdc"
+        },
+        {
+          "type": "raw",
+          "name": "TOOL_ICON_DISCIPLINE",
+          "file": "images/tool-discipline.pdc"
+        },
+        {
+          "type": "raw",
+          "name": "TOOL_ICON_CLEAN",
+          "file": "images/tool-clean.pdc"
         }
       ]
     }

@@ -105,12 +105,23 @@ void set_sprite_offset(int x_offset)
     s_sprite_x_offset = x_offset;
 }
 
+void sprite_sheet_stage(uint8_t stage)
+{
+    if (stage == 1)
+    {
+        s_sprite_sheet = gbitmap_create_with_resource(s_alt_sprites ? RESOURCE_ID_SPRITE_SHEET_EGG_ALT
+                                                                    : RESOURCE_ID_SPRITE_SHEET_EGG);
+    }
+    else
+    {
+        s_sprite_sheet = gbitmap_create_with_resource(s_alt_sprites ? RESOURCE_ID_SPRITE_SHEET_BABY_ALT
+                                                                    : RESOURCE_ID_SPRITE_SHEET_BABY);
+    }
+}
+
 void sprites_init(void)
 {
     s_alt_sprites = rand() % 2 == 1;
-
-    s_sprite_sheet =
-        gbitmap_create_with_resource(s_alt_sprites ? RESOURCE_ID_SPRITE_SHEET_EGG_ALT : RESOURCE_ID_SPRITE_SHEET_EGG);
 }
 
 void sprites_deinit(void)

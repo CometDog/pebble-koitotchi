@@ -1,16 +1,16 @@
 #include "app.h"
+#include "play_area.h"
 #include "sprites.h"
-#include "stage1.h"
 
 static void init(void)
 {
     sprites_init();
-    stage1_init();
+    play_area_init();
 }
 
 static void deinit(void)
 {
-    stage1_deinit();
+    play_area_deinit();
     sprites_deinit();
 }
 

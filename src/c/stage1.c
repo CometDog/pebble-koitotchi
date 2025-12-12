@@ -3,7 +3,6 @@
 #include "ui_config.h"
 #include <pebble.h>
 
-static Window *s_window;
 static Layer *s_egg_layer;
 static AppTimer *s_frame_timer;
 static bool s_is_squished = false;
@@ -12,6 +11,7 @@ static int s_wiggled_times = 0;
 static bool s_alt_egg = false;
 static int s_incubate_seconds = 0;
 static int s_hatching_seconds = 0;
+static void (*s_stage_completion_handler)(int8_t);
 
 #define EGG_BOUNCE_INTERVAL_MS 500
 #define EGG_HATCH_INCUBATING_CYCLES (5 * 60) * 2 // 5 minutes (2 cycles per second)
@@ -104,13 +104,16 @@ static void next_frame_handler(void *context)
         s_hatching_seconds++;
         if (s_hatching_seconds >= EGG_HATCH_TOTAL_SECONDS)
         {
-            // TODO: hand off to stage 2 when implemented
-            // stage2_init();
-
-            // For now, just reset to incubating
-            s_egg_state = EGG_STATE_INCUBATING;
-            s_incubate_seconds = 0;
-            s_is_squished = false;
+            if (s_stage_completion_handler)
+            {
+                s_stage_completion_handler(2);
+                return;
+            }
+            else
+            {
+                // CRITICAL ERROR: No stage completion handler set
+                APP_LOG(APP_LOG_LEVEL_ERROR, "No stage completion handler set in stage1!");
+            }
         }
     }
 
@@ -123,24 +126,21 @@ static void layer_update_proc(Layer *layer, GContext *ctx)
     draw_sprite(layer, ctx);
 }
 
-void stage1_init(void)
+void stage1_init(Layer *parent_layer, void (*stage_completion_handler)(int8_t))
 {
+    sprite_sheet_stage(1);
     s_alt_egg = rand() % 2 == 1;
 
-    s_window = window_create();
-
-    Layer *window_layer = window_get_root_layer(s_window);
-    GRect bounds = layer_get_bounds(window_layer);
-    window_set_background_color(s_window, FULL_WINDOW_BACKGROUND_COLOR);
+    GRect bounds = layer_get_bounds(parent_layer);
 
     s_egg_layer = layer_create(bounds);
     layer_set_update_proc(s_egg_layer, layer_update_proc);
-    layer_add_child(window_layer, s_egg_layer);
+    layer_add_child(parent_layer, s_egg_layer);
 
     update_egg_state();
     s_frame_timer = app_timer_register(EGG_BOUNCE_INTERVAL_MS, next_frame_handler, NULL);
 
-    window_stack_push(s_window, true);
+    s_stage_completion_handler = stage_completion_handler;
 }
 
 void stage1_deinit(void)
@@ -150,5 +150,4 @@ void stage1_deinit(void)
         app_timer_cancel(s_frame_timer);
     }
     layer_destroy(s_egg_layer);
-    window_destroy(s_window);
 }

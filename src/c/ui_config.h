@@ -4,7 +4,7 @@
 
 #ifdef PBL_COLOR
 #define FULL_WINDOW_BACKGROUND_COLOR GColorPastelYellow
-#define PLAY_AREA_BACKGROUND_COLOR GColorWhite
+#define PLAY_AREA_BACKGROUND_COLOR GColorCeleste
 #define PLAY_AREA_GRID_0 GColorVividCerulean
 #define PLAY_AREA_GRID_1 GColorBlack
 #else
